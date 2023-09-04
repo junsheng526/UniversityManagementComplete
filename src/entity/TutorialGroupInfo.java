@@ -48,8 +48,6 @@ public class TutorialGroupInfo implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%-20s %-15s %-15d", tutorialGroupCode, year, sem);
+        return String.format("%-20s %-5d %-5d", tutorialGroupCode, year, sem);
     }
 }
-
-

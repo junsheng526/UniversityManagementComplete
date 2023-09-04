@@ -5,12 +5,13 @@ package boundary;
  * @author Your Name B
  */
 import entity.Student;
+import entity.TutorialGroup;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TutorialGroupManagementUI {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public int getMenuChoice() {
         System.out.println("\n");
@@ -44,6 +45,14 @@ public class TutorialGroupManagementUI {
         return choice;
     }
 
+    public void listAllTutorialGroups(String outputStr) {
+        printLine(130);
+        System.out.printf("%-20s %-5s %-5s %-15s %-20s\n", "Tutorial Group", "Year", "Semester", "Date Added", "Number of Students");
+        printLine(130);
+        System.out.print(outputStr);
+        printLine(130);
+    }
+
     public void printLine(int length) {
         StringBuilder line = new StringBuilder();
         for (int i = 0; i < length; i++) {
@@ -54,7 +63,7 @@ public class TutorialGroupManagementUI {
 
     public void listAllStudentsInTutorialGroup(String outputStr) {
         printLine(130);
-        System.out.printf("%-10s %-15s %-40s %-15s %-15s %-15s %-15s\n", "Student ID", "First Name", "Last Name", "Age", "Gender", "Tutorial Group", "Courses");
+        System.out.printf("%-15s %-50s\n", "Student ID", "Student Name");
         printLine(130);
         System.out.print(outputStr);
         printLine(130);
@@ -72,6 +81,50 @@ public class TutorialGroupManagementUI {
         return code;
     }
 
+    public TutorialGroup inputTutorialGroupDetails() {
+        System.out.print("Enter tutorial group code: ");
+        String tutorialGroupCode = scanner.nextLine();
+        System.out.print("Enter category: ");
+        String category = scanner.nextLine();
+        System.out.print("Enter year: ");
+        int year = -1; // Initialize to a default value
+        while (year < 0) {
+            try {
+                year = scanner.nextInt();
+                if (year < 0) {
+                    System.out.println("Year must be a non-negative integer.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.nextLine(); // Clear the invalid input
+            }
+        }
+        scanner.nextLine(); // Consume the newline left in the buffer
+        System.out.print("Enter semester: ");
+        int semester = -1; // Initialize to a default value
+        while (semester < 0) {
+            try {
+                semester = scanner.nextInt();
+                if (semester < 0) {
+                    System.out.println("Semester must be a non-negative integer.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.nextLine(); // Clear the invalid input
+            }
+        }
+        scanner.nextLine(); // Consume the newline left in the buffer
+
+        return new TutorialGroup(tutorialGroupCode, year, semester);
+    }
+
+    public void displayTutorialGroupDetails(TutorialGroup tutorialGroup) {
+        System.out.println("Tutorial Group Details");
+        System.out.println("Tutorial Group code: " + tutorialGroup.getTutorialGroupInfo().getTutorialGroupCode());
+        System.out.println("Year: " + tutorialGroup.getTutorialGroupInfo().getYear());
+        System.out.println("Semester: " + tutorialGroup.getTutorialGroupInfo().getSem());
+    }
+
     public String inputNewTutorialGroupCode() {
         System.out.print("Enter new tutorial group code: ");
         String newCode = scanner.nextLine();
@@ -81,8 +134,7 @@ public class TutorialGroupManagementUI {
     public void displayStudentDetails(Student student) {
         System.out.println("Student Details");
         System.out.println("Student ID: " + student.getStudentID());
-        System.out.println("First Name: " + student.getFirstName());
-        System.out.println("Last Name: " + student.getLastName());
+        System.out.println("Student Name: " + student.getName());
         // Add other student details as needed
     }
 
@@ -110,4 +162,3 @@ public class TutorialGroupManagementUI {
         System.out.flush();
     }
 }
-
