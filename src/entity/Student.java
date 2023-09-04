@@ -6,13 +6,11 @@ package entity;
  */
 import java.io.Serializable;
 
-public class Student implements Comparable<Student>, Serializable {
+public class Student implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String studentID;
     private String name;
-
-    public Student() {
-    }
 
     public Student(String studentID, String name) {
         this.studentID = studentID;
@@ -33,11 +31,6 @@ public class Student implements Comparable<Student>, Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public int compareTo(Student student) {
-        return this.getStudentID().compareTo(student.getStudentID());
     }
 
     @Override

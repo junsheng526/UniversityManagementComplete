@@ -50,7 +50,30 @@ public class TutorManagement {
                 case 5 ->
                     tutorUI.listAllTutors(getAllTutors());
                 case 6 -> {
-                    // Filter tutors based on criteria logic here
+                    int filterChoice = 0;
+                    do {
+                        filterChoice = tutorUI.getFilterChoice();
+                        switch (filterChoice) {
+                            case 1 -> {
+                                String facultyFilter = tutorUI.inputFilterByFaculty();
+                                SortedArrayList<Tutor> filteredTutors = filterTutorsByFaculty(tutorList, facultyFilter);
+                                tutorUI.listAllTutors(filteredTutorsToString(filteredTutors));
+                            }
+                            case 2 ->{
+                                String nameFilter = tutorUI.inputFilterByName();
+                                SortedArrayList<Tutor> filteredTutors = filterTutorsByName(tutorList, nameFilter);
+                                tutorUI.listAllTutors(filteredTutorsToString(filteredTutors));
+                            }
+                            case 3 ->{
+                                String statusFilter = tutorUI.inputFilterByStatus();
+                                SortedArrayList<Tutor> filteredTutors = filterTutorsByStatus(tutorList, statusFilter);
+                                tutorUI.listAllTutors(filteredTutorsToString(filteredTutors));
+                            }
+                            default ->
+                                MessageUI.displayInvalidChoiceMessage();
+                        }
+                    } while (filterChoice != 4);
+
                 }
                 case 7 ->
                     generateReports();
@@ -58,6 +81,51 @@ public class TutorManagement {
                     MessageUI.displayInvalidChoiceMessage();
             }
         } while (choice != 0);
+    }
+
+    private String filteredTutorsToString(SortedArrayList<Tutor> filteredTutors) {
+        StringBuilder outputStr = new StringBuilder();
+        for (int i = 0; i < filteredTutors.totalNumberOfObject(); i++) {
+            Tutor tutor = filteredTutors.getObject(i);
+            outputStr.append(tutor.toString()).append("\n");
+        }
+        return outputStr.toString();
+    }
+
+    // Use equal to filter faculty, need full text but not case sensitive
+    private SortedArrayList<Tutor> filterTutorsByFaculty(SortedArrayList<Tutor> tutorList, String facultyFilter) {
+        SortedArrayList<Tutor> filteredTutors = new SortedArrayList<>();
+        for (int i = 0; i < tutorList.totalNumberOfObject(); i++) {
+            Tutor tutor = tutorList.getObject(i);
+            if (tutor.getTutorInfo().getFaculty().equalsIgnoreCase(facultyFilter)) {
+                filteredTutors.add(tutor);
+            }
+        }
+        return filteredTutors;
+    }
+
+    // Use contains to find name, no need type full name to filter
+    private SortedArrayList<Tutor> filterTutorsByName(SortedArrayList<Tutor> tutorList, String nameFilter) {
+        SortedArrayList<Tutor> filteredTutors = new SortedArrayList<>();
+        for (int i = 0; i < tutorList.totalNumberOfObject(); i++) {
+            Tutor tutor = tutorList.getObject(i);
+            if (tutor.getTutorInfo().getName().contains(nameFilter)) {
+                filteredTutors.add(tutor);
+            }
+        }
+        return filteredTutors;
+    }
+
+    // Use equal to filter status, need full text but not case sensitive
+    private SortedArrayList<Tutor> filterTutorsByStatus(SortedArrayList<Tutor> tutorList, String statusFilter) {
+        SortedArrayList<Tutor> filteredTutors = new SortedArrayList<>();
+        for (int i = 0; i < tutorList.totalNumberOfObject(); i++) {
+            Tutor tutor = tutorList.getObject(i);
+            if (tutor.getTutorInfo().getStatus().equalsIgnoreCase(statusFilter)) {
+                filteredTutors.add(tutor);
+            }
+        }
+        return filteredTutors;
     }
 
     public void addNewTutor() {
@@ -132,4 +200,3 @@ public class TutorManagement {
         tutorManagement.runTutorManagement();
     }
 }
-

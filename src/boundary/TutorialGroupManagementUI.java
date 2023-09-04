@@ -5,7 +5,6 @@ package boundary;
  * @author Your Name B
  */
 import entity.Student;
-import entity.TutorialGroup;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -75,54 +74,18 @@ public class TutorialGroupManagementUI {
         return studentID;
     }
 
+    public Student inputStudentDetails() {
+        System.out.print("Enter student ID: ");
+        String studentID = scanner.nextLine();
+        System.out.print("Enter student name: ");
+        String name = scanner.nextLine();
+        return new Student(studentID, name);
+    }
+
     public String inputTutorialGroupCode() {
         System.out.print("Enter tutorial group code: ");
         String code = scanner.nextLine();
         return code;
-    }
-
-    public TutorialGroup inputTutorialGroupDetails() {
-        System.out.print("Enter tutorial group code: ");
-        String tutorialGroupCode = scanner.nextLine();
-        System.out.print("Enter category: ");
-        String category = scanner.nextLine();
-        System.out.print("Enter year: ");
-        int year = -1; // Initialize to a default value
-        while (year < 0) {
-            try {
-                year = scanner.nextInt();
-                if (year < 0) {
-                    System.out.println("Year must be a non-negative integer.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid integer.");
-                scanner.nextLine(); // Clear the invalid input
-            }
-        }
-        scanner.nextLine(); // Consume the newline left in the buffer
-        System.out.print("Enter semester: ");
-        int semester = -1; // Initialize to a default value
-        while (semester < 0) {
-            try {
-                semester = scanner.nextInt();
-                if (semester < 0) {
-                    System.out.println("Semester must be a non-negative integer.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid integer.");
-                scanner.nextLine(); // Clear the invalid input
-            }
-        }
-        scanner.nextLine(); // Consume the newline left in the buffer
-
-        return new TutorialGroup(tutorialGroupCode, year, semester);
-    }
-
-    public void displayTutorialGroupDetails(TutorialGroup tutorialGroup) {
-        System.out.println("Tutorial Group Details");
-        System.out.println("Tutorial Group code: " + tutorialGroup.getTutorialGroupInfo().getTutorialGroupCode());
-        System.out.println("Year: " + tutorialGroup.getTutorialGroupInfo().getYear());
-        System.out.println("Semester: " + tutorialGroup.getTutorialGroupInfo().getSem());
     }
 
     public String inputNewTutorialGroupCode() {

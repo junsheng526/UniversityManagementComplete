@@ -44,12 +44,40 @@ public class TutorManagementUI {
         return choice;
     }
 
+    public int getFilterChoice() {
+        int filterOption;
+
+        System.out.println("\n");
+        printLine(35);
+        System.out.println("FILTER TUTORS MENU");
+        printLine(35);
+        System.out.println("1. Filter by Faculty");
+        System.out.println("2. Filter by Name");
+        System.out.println("3. Filter by Status");
+        System.out.println("4. Back to main menu");
+        printLine(35);
+        System.out.print("Please enter your filter choice: ");
+        filterOption = -1;
+        try {
+            filterOption = scanner.nextInt();
+            if (filterOption < 1 || filterOption > 4) {
+                System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a valid number.");
+            scanner.nextLine();
+        }
+
+        scanner.nextLine();
+        return filterOption;
+    }
+
     public void listAllTutors(String outputStr) {
-        printLine(130);
+        printLine(136);
         System.out.printf("%-20s %-15s %-40s %-15s %-15s %-15s %-15s\n", "Tutor ID", "Faculty", "Name", "Phone Number", "Gender", "Status", "Join Date");
-        printLine(130);
+        printLine(136);
         System.out.print(outputStr);
-        printLine(130);
+        printLine(136);
     }
 
     public String inputTutorId() {
@@ -88,6 +116,24 @@ public class TutorManagementUI {
         System.out.print("Enter new tutor ID: ");
         String newTutorId = scanner.nextLine();
         return newTutorId;
+    }
+
+    public String inputFilterByFaculty() {
+        System.out.print("Enter faculty: ");
+        String faculty = scanner.nextLine();
+        return faculty;
+    }
+
+    public String inputFilterByName() {
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+        return name;
+    }
+
+    public String inputFilterByStatus() {
+        System.out.print("Enter status: ");
+        String status = scanner.nextLine();
+        return status;
     }
 
     public void displayMessage(String message) {

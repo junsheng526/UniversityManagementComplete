@@ -1,97 +1,79 @@
 package entity;
 
+import adt.ArrayStack;
+import java.io.Serializable;
+
 /**
  *
  * @author Your Name B
  */
-import adt.SortedArrayList;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Objects;
+public class TutorialGroup implements Serializable {
 
-public class TutorialGroup implements Comparable<TutorialGroup>, Serializable {
+    private static final long serialVersionUID = 1L; // Unique identifier for serialization
 
-    private TutorialGroupInfo tutorialGroup;
-    private LocalDate dateAdded;
-    private SortedArrayList<Student> students = new SortedArrayList<>();
+    private String tutorialCode;
+    private int year;
+    private String semester;
+    private String group;
+    private ArrayStack<Student> students;
 
-    public TutorialGroup() {
-        students = new SortedArrayList<>();
+    // Constructor
+    public TutorialGroup(String tutorialCode, int year, String semester, String group, int initialCapacity) {
+        this.tutorialCode = tutorialCode;
+        this.year = year;
+        this.semester = semester;
+        this.group = group;
+        students = new ArrayStack<>(initialCapacity);
     }
 
-    public TutorialGroup(String tutorialGroupCode, int year, int sem) {
-        this.tutorialGroup = new TutorialGroupInfo(tutorialGroupCode, year, sem);
-        this.dateAdded = LocalDate.now();
-        this.students = new SortedArrayList<>();
-    }
-
+    // Add a student to the tutorial group
     public void addStudent(Student student) {
-        students.add(student);
+        students.push(student);
     }
 
-    public boolean removeStudent(Student student) {
-        return students.remove(student);
+    // Remove a student from the tutorial group
+    public void removeStudent() {
+        students.pop();
+    }
+    
+    public String getTutorialCode() {
+        return tutorialCode;
     }
 
-    public SortedArrayList<Student> getStudents() {
+    public void setTutorialCode(String tutorialCode) {
+        this.tutorialCode = tutorialCode;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    // Getters and setters for students
+    public ArrayStack<Student> getStudents() {
         return students;
     }
 
-    public int getStudentCount() {
-        return students.totalNumberOfObject();
-    }
-
-    public String listAllStudents() {
-        StringBuilder outputStr = new StringBuilder();
-        for (int i = 0; i < students.totalNumberOfObject(); i++) {
-            Student student = students.getObject(i);
-            outputStr.append(student.toString()).append("\n");
-        }
-        return outputStr.toString();
-    }
-
-    public TutorialGroupInfo getTutorialGroupInfo() {
-        return tutorialGroup;
-    }
-
-    public void setTutorialGroupInfo(TutorialGroupInfo tutorialGroup) {
-        this.tutorialGroup = tutorialGroup;
-    }
-
-    public LocalDate getDateAdded() {
-        return dateAdded;
-    }
-
-    public void setDateAdded(LocalDate dateAdded) {
-        this.dateAdded = dateAdded;
-    }
-
-    @Override
-    public int compareTo(TutorialGroup other) {
-        return this.tutorialGroup.getTutorialGroupCode().compareTo(other.getTutorialGroupInfo().getTutorialGroupCode());
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.tutorialGroup);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        TutorialGroup other = (TutorialGroup) obj;
-        return this.tutorialGroup.getTutorialGroupCode().equals(other.getTutorialGroupInfo().getTutorialGroupCode());
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%-35s %-15s %-20d", tutorialGroup.toString(), dateAdded, getStudentCount());
+    public void setStudents(ArrayStack<Student> students) {
+        this.students = students;
     }
 }
