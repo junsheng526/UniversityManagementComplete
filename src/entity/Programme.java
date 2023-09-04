@@ -2,7 +2,7 @@ package entity;
 
 /**
  *
- * @author Your Name D
+ * @author Your Name A
  */
 import java.io.Serializable;
 

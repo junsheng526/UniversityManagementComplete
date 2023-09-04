@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Your Name A
+ * @author Your Name D
  */
 public class CourseInfo implements Serializable {
 

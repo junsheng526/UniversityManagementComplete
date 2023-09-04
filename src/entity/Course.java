@@ -2,7 +2,7 @@ package entity;
 
 /**
  *
- * @author Your Name A
+ * @author Your Name D
  */
 import adt.SortedArrayList;
 import java.io.Serializable;

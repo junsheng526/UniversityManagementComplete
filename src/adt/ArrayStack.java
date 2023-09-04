@@ -1,7 +1,7 @@
 package adt;
 /**
  *
- * @author Your Name B
+ * @author Your Name C
  */
 
 public class ArrayStack<T> implements ArrayStackInterface<T> {

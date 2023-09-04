@@ -2,7 +2,7 @@ package utility;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Your Name A, B, C, D
  */
 public class MessageUI {
   

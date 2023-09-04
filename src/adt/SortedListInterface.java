@@ -2,7 +2,7 @@ package adt;
 
 /**
  *
- * @author Your Name D
+ * @author Your Name B
  * @param <T>
  */
 public interface SortedListInterface<T extends Comparable<T>> {

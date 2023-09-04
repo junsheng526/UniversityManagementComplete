@@ -2,7 +2,7 @@ package adt;
 
 /**
  *
- * @author Your Name A
+ * @author Your Name D
  */
 
 import java.util.Iterator;

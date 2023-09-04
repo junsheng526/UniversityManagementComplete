@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Your Name D
+ * @author Your Name B
  * @param <T>
  */
 public class SortedArrayList<T extends Comparable<T>> implements SortedListInterface<T>, Serializable {

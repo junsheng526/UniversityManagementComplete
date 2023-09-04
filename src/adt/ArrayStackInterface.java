@@ -2,7 +2,7 @@ package adt;
 
 /**
  *
- * @author Your Name B
+ * @author Your Name C
  */
 
 public interface ArrayStackInterface<T> {
