@@ -4,7 +4,7 @@ package dao;
  *
  * @author Deong Yue Jiaz
  */
-import adt.SortedArrayList;
+import adt.ArrayList;
 import entity.*;
 import java.io.*;
 
@@ -12,7 +12,7 @@ public class CourseDAO {
 
     private String fileName = "courses.dat";
 
-    public void saveToFile(SortedArrayList<Course> courseList) {
+    public void saveToFile(ArrayList<Course> courseList) {
         File file = new File(fileName);
         try {
             ObjectOutputStream ooStream = new ObjectOutputStream(new FileOutputStream(file));
@@ -25,12 +25,12 @@ public class CourseDAO {
         }
     }
 
-    public SortedArrayList<Course> retrieveFromFile() {
+    public ArrayList<Course> retrieveFromFile() {
         File file = new File(fileName);
-        SortedArrayList<Course> courseList = new SortedArrayList<>();
+        ArrayList<Course> courseList = new ArrayList<>();
         try {
             ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
-            courseList = (SortedArrayList<Course>) (oiStream.readObject());
+            courseList = (ArrayList<Course>) (oiStream.readObject());
             oiStream.close();
         } catch (FileNotFoundException ex) {
             System.out.println("\nNo such file.");

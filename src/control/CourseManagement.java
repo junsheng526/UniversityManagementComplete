@@ -1,10 +1,6 @@
 package control;
 
-/**
- *
- * @author Deong Yue Jiaz
- */
-import adt.*;
+import adt.ArrayList;
 import boundary.CourseManagementUI;
 import dao.CourseDAO;
 import entity.Course;
@@ -13,10 +9,10 @@ import utility.MessageUI;
 
 public class CourseManagement {
 
-    private SortedArrayList<Course> courseList = new SortedArrayList<>();
+    private ArrayList<Course> courseList = new ArrayList<>(); // Use your custom ArrayList
     private final CourseManagementUI courseUI = new CourseManagementUI();
     private CourseDAO courseDAO = new CourseDAO();
-    
+
     int add = 0, remove = 0, edit = 0;
 
     public CourseManagement() {
@@ -43,11 +39,11 @@ public class CourseManagement {
                 }
                 case 3 ->
                     findCourse();
-                case 4 ->{
+                case 4 -> {
                     amendCourseDetails();
                     courseUI.listAllCourses(getAllCourses());
                     edit++;
-                }   
+                }
                 case 5 ->
                     courseUI.listAllCourses(getAllCourses());
                 case 6 ->
@@ -98,9 +94,17 @@ public class CourseManagement {
         if (course != null) {
             courseUI.displayMessage("### Please enter new details ###");
             Course newCourseDetails = courseUI.inputCourseDetails();
-            courseList.replace(course, newCourseDetails);
-            courseDAO.saveToFile(courseList);
-            courseUI.displayMessage("Course details amended.");
+
+            // Find the index of the course
+            int index = courseList.getPositionOf(course);
+
+            if (index >= 0) {
+                courseList.replace(index, newCourseDetails);
+                courseDAO.saveToFile(courseList);
+                courseUI.displayMessage("Course details amended.");
+            } else {
+                courseUI.displayMessage("Course not found.");
+            }
         } else {
             courseUI.displayMessage("Course not found.");
         }
@@ -136,11 +140,11 @@ public class CourseManagement {
             courseUI.displayMessage("Course not found.");
         }
     }
-    
+
     public Programme findProgrammeByCode(Course course, String programmeCode) {
-        for (int i = 0; i < course.getProgrammes().totalNumberOfObject(); i++) {
-            Programme programme = course.getProgrammes().getObject(i);
-            if (programme.getProgrammeCode().equals(programmeCode)) {
+        for (int i = 1; i <= course.getProgrammes().getNumberOfEntries(); i++) {
+            Programme programme = course.getProgrammes().getEntry(i);
+            if (programmeCode.equals(programme.getProgrammeCode())) {
                 return programme;
             }
         }
@@ -149,14 +153,13 @@ public class CourseManagement {
 
     public void generateReports() {
         courseUI.listAllCourses(getAllCourses());
-        int totalCourse = courseList.totalNumberOfObject();
+        int totalCourse = courseList.getNumberOfEntries();
         courseUI.displayCourseManagementReport(totalCourse, add, remove, edit);
     }
 
-    // Find Course By Code can reuse in update details also
     private Course findCourseByCode(String courseCode) {
-        for (int i = 0; i < courseList.totalNumberOfObject(); i++) {
-            Course course = courseList.getObject(i);
+        for (int i = 1; i <= courseList.getNumberOfEntries(); i++) {
+            Course course = courseList.getEntry(i);
             if (course.getCourseInfo().getCourseCode().equals(courseCode)) {
                 return course;
             }
@@ -166,8 +169,8 @@ public class CourseManagement {
 
     private String getAllCourses() {
         StringBuilder outputStr = new StringBuilder();
-        for (int i = 0; i < courseList.totalNumberOfObject(); i++) {
-            Course course = courseList.getObject(i);
+        for (int i = 1; i <= courseList.getNumberOfEntries(); i++) {
+            Course course = courseList.getEntry(i);
             outputStr.append(course.toString()).append("\n");
         }
         return outputStr.toString();

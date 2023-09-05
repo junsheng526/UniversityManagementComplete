@@ -4,7 +4,6 @@ package adt;
  *
  * @author Your Name D
  */
-
 import java.util.Iterator;
 
 public interface ArrayListInterface<T> {

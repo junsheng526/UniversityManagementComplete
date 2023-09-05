@@ -4,7 +4,7 @@ package entity;
  *
  * @author Your Name D
  */
-import adt.SortedArrayList;
+import adt.ArrayList;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -13,16 +13,16 @@ public class Course implements Comparable<Course>, Serializable {
 
     private CourseInfo course;
     private LocalDate dateAdded;
-    private SortedArrayList<Programme> programmes = new SortedArrayList<>();
+    private ArrayList<Programme> programmes = new ArrayList<>();
 
     public Course() {
-        programmes = new SortedArrayList<>();
+        programmes = new ArrayList<>();
     }
 
     public Course(String courseCode, String category, String name, int creditHours, String status) {
         this.course = new CourseInfo(courseCode, category, name, creditHours, status);
         this.dateAdded = LocalDate.now();
-        this.programmes = new SortedArrayList<>();
+        this.programmes = new ArrayList<>();
     }
 
     public void addProgramme(Programme programme) {
@@ -33,18 +33,18 @@ public class Course implements Comparable<Course>, Serializable {
         return programmes.remove(programme);
     }
 
-    public SortedArrayList<Programme> getProgrammes() {
+    public ArrayList<Programme> getProgrammes() {
         return programmes;
     }
 
     public int getProgrammeCount() {
-        return programmes.totalNumberOfObject();
+        return programmes.getNumberOfEntries();
     }
 
     public String listAllProgrammesByCourse() {
         StringBuilder outputStr = new StringBuilder();
-        for (int i = 0; i < programmes.totalNumberOfObject(); i++) {
-            Programme programme = programmes.getObject(i);
+        for (int i = 1; i <= programmes.getNumberOfEntries(); i++) {
+            Programme programme = programmes.getEntry(i);
             outputStr.append(programme.toString()).append("\n");
         }
         return outputStr.toString();
