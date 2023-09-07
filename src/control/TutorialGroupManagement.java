@@ -19,14 +19,14 @@ public class TutorialGroupManagement {
 
     public ListInterface<TutorialGroup> initializeTutorialGroups() {
         tutorialGroups.add(new TutorialGroup("RSW", 3, 1, 1));
-        tutorialGroups.add(new TutorialGroup("RSD", 1, 2, 3));
-        tutorialGroups.add(new TutorialGroup("RIT", 2, 2, 1));
-        // Add more tutorial groups here
-
+        tutorialGroups.add(new TutorialGroup("RSD", 1, 1, 1));
+        tutorialGroups.add(new TutorialGroup("RAC", 3, 2, 1));
         return tutorialGroups;
     }
 
     public void runTutorialGroupManagement() {
+        ListInterface<TutorialGroup> tutorialGroups = initializeTutorialGroups();
+
         int choice = 0;
         do {
             choice = tutorialUI.getMenuChoice();
@@ -361,12 +361,5 @@ public class TutorialGroupManagement {
             }
         }
         return null; // Tutorial group not found
-    }
-
-    public static void main(String[] args) {
-
-        TutorialGroupManagement tutorialGroupManagement = new TutorialGroupManagement();
-        ListInterface<TutorialGroup> tutorialGroups = tutorialGroupManagement.initializeTutorialGroups();
-        tutorialGroupManagement.runTutorialGroupManagement();
     }
 }

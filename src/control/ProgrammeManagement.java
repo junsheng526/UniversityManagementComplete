@@ -8,21 +8,26 @@ import adt.DoubleLinkedQueue;
 import entity.Programme;
 import boundary.ProgrammeManagementUI;
 import entity.TutorialGroup;
+import java.io.Serializable;
 import java.util.ListIterator;
 
-public class ProgrammeManagement {
+public class ProgrammeManagement implements Serializable {
 
     private DoubleLinkedQueue<Programme> programmeQueue = new DoubleLinkedQueue<>();
     private final ProgrammeManagementUI programmeUI = new ProgrammeManagementUI();
 
     private int added = 0, removed = 0, amended = 0;
 
-    public ProgrammeManagement() {
-        // You can load programmes from a file or initialize an empty queue here.
+    public DoubleLinkedQueue<Programme> initializeProgrammeQueue() {
+        programmeQueue.enqueue(new Programme("RSW", "Software Engineer"));
+        programmeQueue.enqueue(new Programme("RSD", "Data Science"));
+        programmeQueue.enqueue(new Programme("RAC", "Accounting"));
+        return programmeQueue;
     }
 
     public void runProgrammeManagement() {
-        int choice = 0;
+        DoubleLinkedQueue<Programme> programmeQueue = initializeProgrammeQueue();
+        int choice;
         do {
             choice = programmeUI.getMenuChoice();
             switch (choice) {
@@ -204,12 +209,6 @@ public class ProgrammeManagement {
                 return programme;
             }
         }
-
         return null;
-    }
-
-    public static void main(String[] args) {
-        ProgrammeManagement programmeManagement = new ProgrammeManagement();
-        programmeManagement.runProgrammeManagement();
     }
 }

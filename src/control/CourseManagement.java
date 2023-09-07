@@ -1,5 +1,9 @@
 package control;
 
+/**
+ *
+ * @author Your Name D
+ */
 import adt.ArrayList;
 import boundary.CourseManagementUI;
 import dao.CourseDAO;
@@ -20,7 +24,7 @@ public class CourseManagement {
     }
 
     public void runCourseManagement() {
-        int choice = 0;
+        int choice;
         do {
             choice = courseUI.getMenuChoice();
             switch (choice) {
@@ -189,10 +193,5 @@ public class CourseManagement {
         } else {
             courseUI.displayMessage("Course not found.");
         }
-    }
-
-    public static void main(String[] args) {
-        CourseManagement courseManagement = new CourseManagement();
-        courseManagement.runCourseManagement();
     }
 }

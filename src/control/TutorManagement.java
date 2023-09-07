@@ -193,9 +193,4 @@ public class TutorManagement {
         }
         return outputStr.toString();
     }
-
-    public static void main(String[] args) {
-        TutorManagement tutorManagement = new TutorManagement();
-        tutorManagement.runTutorManagement();
-    }
 }

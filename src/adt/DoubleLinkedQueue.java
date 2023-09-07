@@ -4,10 +4,11 @@ package adt;
  *
  * @author Your Name A
  */
+import java.io.Serializable;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class DoubleLinkedQueue<T> implements DoubleLinkedQueueInterface<T> {
+public class DoubleLinkedQueue<T> implements DoubleLinkedQueueInterface<T>, Serializable {
 
     private Node head;//References the first node in the chain, when head is null, means the queue is empty
     private Node tail;//Tail of the node
