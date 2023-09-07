@@ -2,7 +2,6 @@ package entity;
 
 import adt.SinglyLinkedList;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Objects;
 
 /**
