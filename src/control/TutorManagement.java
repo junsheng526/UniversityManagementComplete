@@ -73,7 +73,6 @@ public class TutorManagement {
                                 MessageUI.displayInvalidChoiceMessage();
                         }
                     } while (filterChoice != 4);
-
                 }
                 case 7 ->
                     generateReports();
