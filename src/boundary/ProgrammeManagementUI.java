@@ -5,6 +5,7 @@ package boundary;
  * @author Your Name A
  */
 import entity.Programme;
+import entity.TutorialGroup;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -48,6 +49,17 @@ public class ProgrammeManagementUI {
         return choice;
     }
 
+    public void listAllProgrammesHeader() {
+        printLine(70);
+        System.out.printf("%-20s %-50s\n", "Programme Code", "Name");
+        printLine(70);
+    }
+
+    // Method to display a footer after listing all programmes
+    public void listAllProgrammesFooter() {
+        printLine(70);
+    }
+
     // Method to input Programme details
     public Programme inputProgrammeDetails() {
         System.out.print("Enter programme code: ");
@@ -58,11 +70,19 @@ public class ProgrammeManagementUI {
         return new Programme(programmeCode, name);
     }
 
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
     // Method to input Programme code
     public String inputProgrammeCode() {
         System.out.print("Enter programme code: ");
         String code = scanner.nextLine();
         return code;
+    }
+
+    public void displayProgramme(Programme programme) {
+        System.out.printf("%-20s %-50s\n", programme.getProgrammeCode(), programme.getName());
     }
 
     // Method to display Programme details
@@ -90,10 +110,30 @@ public class ProgrammeManagementUI {
         return code;
     }
 
+    public TutorialGroup inputTutorialGroupDetails() {
+        System.out.print("Enter tutorial group code: ");
+        String code = scanner.nextLine();
+        System.out.print("Enter year: ");
+        int year = scanner.nextInt();
+        System.out.print("Enter semester: ");
+        int semester = scanner.nextInt();
+        System.out.print("Enter group: ");
+        int group = scanner.nextInt();
+        return new TutorialGroup(code, year, semester, group);
+    }
+
     // Method to remove a Tutorial Group from a Programme
     public void removeTutorialGroupFromProgramme() {
         System.out.print("Enter tutorial group code to remove: ");
         String code = scanner.nextLine();
+    }
+
+    public void listAllTutGroupByProgramme(String outputStr) {
+        printLine(130);
+        System.out.printf("%-15s %-10s %-10s %-10s\n", "Tutorial Code", "Year", "Semester", "Group");
+        printLine(130);
+        System.out.print(outputStr);
+        printLine(130);
     }
 
     // Method to list all Tutorial Groups for a Programme

@@ -4,12 +4,15 @@ package entity;
  *
  * @author Your Name A
  */
+import adt.DoubleLinkedQueue;
 import java.io.Serializable;
+import java.util.ListIterator;
 
-public class Programme implements Comparable<Programme>, Serializable {
+public class Programme implements Serializable {
 
     private String programmeCode;
     private String name;
+    private DoubleLinkedQueue<TutorialGroup> tutorialGroups = new DoubleLinkedQueue<>();
 
     public Programme() {
     }
@@ -35,9 +38,39 @@ public class Programme implements Comparable<Programme>, Serializable {
         this.name = name;
     }
 
-    @Override
-    public int compareTo(Programme T) {
-        return this.getProgrammeCode().compareTo(T.getProgrammeCode());
+    public DoubleLinkedQueue<TutorialGroup> getTutorialGroups() {
+        return tutorialGroups;
+    }
+
+    public void setTutorialGroups(DoubleLinkedQueue<TutorialGroup> tutorialGroups) {
+        this.tutorialGroups = tutorialGroups;
+    }
+
+    public void addTutorialGroup(TutorialGroup tutorialGroup) {
+        tutorialGroups.enqueue(tutorialGroup);
+    }
+
+    public boolean removeTutorialGroupByCode(String tutorialCode) {
+        ListIterator<TutorialGroup> iterator = tutorialGroups.getListIterator();
+        while (iterator.hasNext()) {
+            TutorialGroup tutorialGroup = iterator.next();
+            if (tutorialGroup.getTutorialCode().equals(tutorialCode)) {
+                int i = tutorialGroups.indexOf(tutorialGroup);
+                tutorialGroups.dequeue(i);
+                return true; // Tutorial group found and removed
+            }
+        }
+
+        return false; // Tutorial group not found
+    }
+
+    public String listAllTutGroupByProgramme() {
+        StringBuilder outputStr = new StringBuilder();
+        for (int i = 1; i <= tutorialGroups.size(); i++) {
+            TutorialGroup tutorialGroup = tutorialGroups.get(i);
+            outputStr.append(tutorialGroup.toString()).append("\n");
+        }
+        return outputStr.toString();
     }
 
     @Override

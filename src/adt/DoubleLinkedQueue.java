@@ -4,7 +4,6 @@ package adt;
  *
  * @author Your Name A
  */
-
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -68,25 +67,25 @@ public class DoubleLinkedQueue<T> implements DoubleLinkedQueueInterface<T> {
     //Retrieves and removes the head of this queue, or returns null if this queue is empty.
     @Override
     public boolean dequeue() {
-        //Save current head pointer
-        Node currentHead = head;
-        //If queue is empty
         if (head == null) {
-            return false;
-        } //If only one item inside queue
-        else if (head == tail) {
-            tail = null;
-        } //If length >1, queue not empty
-        else {
-            head.next.previous = null;
-            head = currentHead.next;
-            length--;//Reduce length size
+            return false; // Queue is empty
         }
+
+        Node currentHead = head;
+
+        if (head == tail) {
+            // If only one item inside queue
+            tail = null;
+        } else {
+            head.next.previous = null;
+        }
+
+        head = currentHead.next;
+        length--; // Reduce length size
         return true;
     }
 
     //This method is searching based on the position and deque it
-    //Used when one order has been successfully updated the order status to 'Delivered' then dequeue from DeliveryOrderQueue
     @Override
     public boolean dequeue(int position) {
         if (indexValidation(position)) {
@@ -165,7 +164,7 @@ public class DoubleLinkedQueue<T> implements DoubleLinkedQueueInterface<T> {
     //Internal used purpose : Check whether the current position is valid or not
     private boolean indexValidation(int position) {
         if (position <= 0 || position > length) {
-            throw new ArrayIndexOutOfBoundsException(position);
+            throw new IndexOutOfBoundsException("Invalid position: " + position);
         }
         return true;
     }
@@ -175,7 +174,7 @@ public class DoubleLinkedQueue<T> implements DoubleLinkedQueueInterface<T> {
     public boolean contains(T element) {
         Node currentNode = head;
         while (currentNode != null) {
-            if (currentNode.object == element) {
+            if (currentNode.object.equals(element)) {
                 return true;
             }
             currentNode = currentNode.next;

@@ -4,7 +4,6 @@ package adt;
  *
  * @author Your Name C
  */
-
 import java.util.ListIterator;
 
 public interface DoubleLinkedQueueInterface<T> {
@@ -31,6 +30,7 @@ public interface DoubleLinkedQueueInterface<T> {
 
     public boolean set(int position, T newEntry);
 
+    @Override
     public String toString();
 
     public ListIterator<T> getListIterator(int position);

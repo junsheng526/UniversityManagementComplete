@@ -1,7 +1,7 @@
 package entity;
 
-import adt.ArrayStack;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -13,29 +13,17 @@ public class TutorialGroup implements Serializable {
 
     private String tutorialCode;
     private int year;
-    private String semester;
-    private String group;
-    private ArrayStack<Student> students;
+    private int semester;
+    private int group;
 
     // Constructor
-    public TutorialGroup(String tutorialCode, int year, String semester, String group, int initialCapacity) {
+    public TutorialGroup(String tutorialCode, int year, int semester, int group) {
         this.tutorialCode = tutorialCode;
         this.year = year;
         this.semester = semester;
         this.group = group;
-        students = new ArrayStack<>(initialCapacity);
     }
 
-    // Add a student to the tutorial group
-    public void addStudent(Student student) {
-        students.push(student);
-    }
-
-    // Remove a student from the tutorial group
-    public void removeStudent() {
-        students.pop();
-    }
-    
     public String getTutorialCode() {
         return tutorialCode;
     }
@@ -52,28 +40,41 @@ public class TutorialGroup implements Serializable {
         this.year = year;
     }
 
-    public String getSemester() {
+    public int getSemester() {
         return semester;
     }
 
-    public void setSemester(String semester) {
+    public void setSemester(int semester) {
         this.semester = semester;
     }
 
-    public String getGroup() {
+    public int getGroup() {
         return group;
     }
 
-    public void setGroup(String group) {
+    public void setGroup(int group) {
         this.group = group;
     }
 
-    // Getters and setters for students
-    public ArrayStack<Student> getStudents() {
-        return students;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        TutorialGroup other = (TutorialGroup) obj;
+        return tutorialCode.equals(other.tutorialCode);
     }
 
-    public void setStudents(ArrayStack<Student> students) {
-        this.students = students;
+    @Override
+    public int hashCode() {
+        return Objects.hash(tutorialCode);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%-15s %-10d %-10d %-10d", tutorialCode, year, semester, group);
     }
 }

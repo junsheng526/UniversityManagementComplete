@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Course implements Comparable<Course>, Serializable {
+public class Course implements Serializable {
 
     private CourseInfo course;
     private LocalDate dateAdded;
@@ -64,11 +64,6 @@ public class Course implements Comparable<Course>, Serializable {
 
     public void setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
-    }
-
-    @Override
-    public int compareTo(Course T) {
-        return this.course.getCourseCode().compareTo(T.getCourseInfo().getCourseCode());
     }
 
     @Override
