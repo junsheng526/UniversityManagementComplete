@@ -7,26 +7,30 @@ package control;
 import adt.DoubleLinkedQueue;
 import entity.Programme;
 import boundary.ProgrammeManagementUI;
+import dao.ProgrammeDAO;
 import entity.TutorialGroup;
-import java.io.Serializable;
 import java.util.ListIterator;
 
-public class ProgrammeManagement implements Serializable {
+public class ProgrammeManagement {
 
     private DoubleLinkedQueue<Programme> programmeQueue = new DoubleLinkedQueue<>();
     private final ProgrammeManagementUI programmeUI = new ProgrammeManagementUI();
+    private ProgrammeDAO programmeDAO = new ProgrammeDAO();
 
     private int added = 0, removed = 0, amended = 0;
 
-    public DoubleLinkedQueue<Programme> initializeProgrammeQueue() {
-        programmeQueue.enqueue(new Programme("RSW", "Software Engineer"));
-        programmeQueue.enqueue(new Programme("RSD", "Data Science"));
-        programmeQueue.enqueue(new Programme("RAC", "Accounting"));
-        return programmeQueue;
+//    public DoubleLinkedQueue<Programme> initializeProgrammeQueue() {
+//        programmeQueue.enqueue(new Programme("RSW", "Software Engineer"));
+//        programmeQueue.enqueue(new Programme("RSD", "Data Science"));
+//        programmeQueue.enqueue(new Programme("RAC", "Accounting"));
+//        return programmeQueue;
+//    }
+    public ProgrammeManagement() {
+        programmeQueue = programmeDAO.retrieveFromFile();
     }
 
     public void runProgrammeManagement() {
-        DoubleLinkedQueue<Programme> programmeQueue = initializeProgrammeQueue();
+//        DoubleLinkedQueue<Programme> programmeQueue = initializeProgrammeQueue();
         int choice;
         do {
             choice = programmeUI.getMenuChoice();
@@ -60,6 +64,7 @@ public class ProgrammeManagement implements Serializable {
     public void addProgramme() {
         Programme newProgramme = programmeUI.inputProgrammeDetails();
         programmeQueue.enqueue(newProgramme);
+        programmeDAO.saveToFile(programmeQueue);
         added++;
         programmeUI.displayMessage("Programme added successfully.");
     }
@@ -70,6 +75,7 @@ public class ProgrammeManagement implements Serializable {
         if (programme != null) {
             int position = findProgrammePosition(programme);
             programmeQueue.dequeue(position);
+            programmeDAO.saveToFile(programmeQueue);
             removed++;
             programmeUI.displayMessage("Programme removed successfully.");
         } else {
@@ -110,6 +116,7 @@ public class ProgrammeManagement implements Serializable {
             programmeUI.displayMessage("### Please enter new details ###");
             Programme newProgrammeDetails = programmeUI.inputProgrammeDetails();
             programmeQueue.set(position, newProgrammeDetails);
+            programmeDAO.saveToFile(programmeQueue);
             amended++;
             programmeUI.displayMessage("Programme details amended successfully.");
         } else {
@@ -146,6 +153,7 @@ public class ProgrammeManagement implements Serializable {
             // Update the program in the queue
             int position = findProgrammePosition(programme);
             programmeQueue.set(position, programme);
+            programmeDAO.saveToFile(programmeQueue);
 
             // Display a confirmation message
             programmeUI.displayMessage("Tutorial group added to the program successfully.");
@@ -167,6 +175,7 @@ public class ProgrammeManagement implements Serializable {
 
             // Remove the tutorial group by tutorialCode
             boolean removed = currentProgramme.removeTutorialGroupByCode(tutorialCode);
+            programmeDAO.saveToFile(programmeQueue);
 
             if (removed) {
                 programmeUI.displayMessage("Tutorial group removed successfully.");

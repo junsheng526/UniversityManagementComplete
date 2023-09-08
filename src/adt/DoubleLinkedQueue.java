@@ -14,7 +14,7 @@ public class DoubleLinkedQueue<T> implements DoubleLinkedQueueInterface<T>, Seri
     private Node tail;//Tail of the node
     private int length;//DoubleLinkedQueue size
 
-    private class Node<T> {
+    private class Node<T> implements Serializable {
 
         private T object;//Generic object
         private Node next;//Node reference of the next pointer
