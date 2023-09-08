@@ -8,6 +8,7 @@ import adt.ArrayStack;
 import adt.ListInterface;
 import adt.SinglyLinkedList;
 import boundary.TutorialGroupManagementUI;
+import dao.TutorialGroupDAO;
 import entity.Student;
 import entity.TutorialGroup;
 import utility.MessageUI;
@@ -16,16 +17,20 @@ public class TutorialGroupManagement {
 
     private SinglyLinkedList<TutorialGroup> tutorialGroups = new SinglyLinkedList<>();
     private final TutorialGroupManagementUI tutorialUI = new TutorialGroupManagementUI();
+    private TutorialGroupDAO tutDAO = new TutorialGroupDAO();
 
-    public ListInterface<TutorialGroup> initializeTutorialGroups() {
-        tutorialGroups.add(new TutorialGroup("RSW", 3, 1, 1));
-        tutorialGroups.add(new TutorialGroup("RSD", 1, 1, 1));
-        tutorialGroups.add(new TutorialGroup("RAC", 3, 2, 1));
-        return tutorialGroups;
+    public TutorialGroupManagement() {
+        tutorialGroups = tutDAO.retrieveFromFile();
     }
 
+//    public ListInterface<TutorialGroup> initializeTutorialGroups() {
+//        tutorialGroups.add(new TutorialGroup("RSW", 3, 1, 1));
+//        tutorialGroups.add(new TutorialGroup("RSD", 1, 1, 1));
+//        tutorialGroups.add(new TutorialGroup("RAC", 3, 2, 1));
+//        return tutorialGroups;
+//    }
     public void runTutorialGroupManagement() {
-        ListInterface<TutorialGroup> tutorialGroups = initializeTutorialGroups();
+//        ListInterface<TutorialGroup> tutorialGroups = initializeTutorialGroups();
 
         int choice = 0;
         do {
@@ -56,6 +61,9 @@ public class TutorialGroupManagement {
                     tutorialUI.listAllTutorialGroups(displayTutGroup());
                     break;
                 case 8:
+                    addTutorialGroup();
+                    break;
+                case 9:
                     generateTutorialGroupReports();
                     break;
                 default:
@@ -84,6 +92,7 @@ public class TutorialGroupManagement {
                 if (studentToRemove != null) {
                     // Remove the student from the tutorial group
                     tutorialGroup.removeStudent(studentToRemove);
+                    tutDAO.saveToFile(tutorialGroups);
 
                     tutorialUI.displayMessage("Student removed from the tutorial group.");
                 } else {
@@ -161,6 +170,7 @@ public class TutorialGroupManagement {
 
         // Add the student to the new tutorial group
         newGroup.addStudent(studentToMove);
+        tutDAO.saveToFile(tutorialGroups);
 
         tutorialUI.displayMessage("Student moved to the new tutorial group.");
     }
@@ -345,6 +355,7 @@ public class TutorialGroupManagement {
 
             // Add the student to the existing tutorial group
             existingGroup.addStudent(newStudent);
+            tutDAO.saveToFile(tutorialGroups);
 
             tutorialUI.displayMessage("Student added to the tutorial group.");
         } else {
@@ -362,4 +373,29 @@ public class TutorialGroupManagement {
         }
         return null; // Tutorial group not found
     }
+
+    public void addTutorialGroup() {
+        // Prompt the user to enter the tutorial group details
+        String tutorialCode = tutorialUI.inputTutorialGroupCode();
+        int year = tutorialUI.inputYear();
+        int semester = tutorialUI.inputSem();
+        int group = tutorialUI.inputGroup();
+
+        // Check if the tutorial group already exists
+        TutorialGroup existingGroup = findTutorialGroupByCode(tutorialCode);
+
+        if (existingGroup == null) {
+            // Create a new TutorialGroup object with the entered information
+            TutorialGroup newTutorialGroup = new TutorialGroup(tutorialCode, year, semester, group);
+
+            // Add the new tutorial group to the list
+            tutorialGroups.add(newTutorialGroup);
+            tutDAO.saveToFile(tutorialGroups);
+
+            tutorialUI.displayMessage("Tutorial group added.");
+        } else {
+            tutorialUI.displayMessage("Tutorial group already exists with the same code.");
+        }
+    }
+
 }

@@ -24,15 +24,16 @@ public class TutorialGroupManagementUI {
         System.out.println("5. List All Students in Tutorial Group");
         System.out.println("6. Filter Tutorial Groups Based on Criteria");
         System.out.println("7. List All Tutorial Group");
-        System.out.println("8. Generate Tutorial Group Reports");
+        System.out.println("8. Create tutorial group");
+        System.out.println("9. Generate Tutorial Group Reports");
         System.out.println("0. Quit");
         printLine(35);
         System.out.print("Please enter your choice: ");
         int choice = -1;
         try {
             choice = scanner.nextInt();
-            if (choice < 0 || choice > 8) {
-                System.out.println("Invalid choice. Please enter a number between 0 and 8.");
+            if (choice < 0 || choice > 9) {
+                System.out.println("Invalid choice. Please enter a number between 0 and 9.");
             }
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid number.");
@@ -103,6 +104,12 @@ public class TutorialGroupManagementUI {
         System.out.print("Enter semester: ");
         int sem = scanner.nextInt();
         return sem;
+    }
+
+    public int inputGroup() {
+        System.out.print("Enter group: ");
+        int group = scanner.nextInt();
+        return group;
     }
 
     public String inputNewTutorialGroupCode() {

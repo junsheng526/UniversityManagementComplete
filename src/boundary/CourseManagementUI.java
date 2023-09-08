@@ -71,10 +71,20 @@ public class CourseManagementUI {
     }
 
     public Course inputCourseDetails() {
-        System.out.print("Enter course code: ");
-        String courseCode = scanner.nextLine();
+        String courseCode;
+        while (true) {
+            System.out.print("Enter course code (e.g., BACS1234, BAIT0987): ");
+            courseCode = scanner.nextLine().trim();
+            if (isValidCourseCode(courseCode)) {
+                break;
+            } else {
+                System.out.println("Invalid format. Please enter a valid course code.");
+            }
+        }
+
         System.out.print("Enter course category: ");
         String category = scanner.nextLine();
+
         System.out.print("Enter course name: ");
         String name = scanner.nextLine();
 
@@ -82,26 +92,27 @@ public class CourseManagementUI {
         while (creditHours < 0) {
             try {
                 System.out.print("Enter course credit hours: ");
-                creditHours = scanner.nextInt();
+                creditHours = Integer.parseInt(scanner.nextLine());
                 if (creditHours < 0) {
                     System.out.println("Credit hours must be a non-negative integer.");
                 }
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid integer.");
-                scanner.nextLine(); // Clear the invalid input
             }
         }
 
-        scanner.nextLine(); // Consume the newline left in the buffer
         System.out.print("Enter course status: ");
         String status = scanner.nextLine();
 
         return new Course(courseCode, category, name, creditHours, status);
     }
 
+    private boolean isValidCourseCode(String code) {
+        return code.matches("B[A-Z]{3}\\d{4}");
+    }
+
     public Programme inputProgrammeDetails() {
-        System.out.print("Enter programme code: ");
-        String programmeCode = scanner.nextLine();
+        String programmeCode = inputProgrammeCode();
         System.out.print("Enter programme name: ");
         String name = scanner.nextLine();
 
@@ -109,15 +120,27 @@ public class CourseManagementUI {
     }
 
     public String inputProgrammeCode() {
-        System.out.print("Enter programme code: ");
-        String code = scanner.nextLine();
-        return code;
+        while (true) {
+            System.out.print("Enter programme code (e.g., RST, RIS): ");
+            String code = scanner.nextLine().trim();
+            if (code.matches("R[A-Z]{2}")) {
+                return code;
+            } else {
+                System.out.println("Invalid format. Please enter a valid programme code.");
+            }
+        }
     }
 
     public String inputCourseCode() {
-        System.out.print("Enter course code: ");
-        String code = scanner.nextLine();
-        return code;
+        while (true) {
+            System.out.print("Enter course code (e.g., BACS1234, BAIT0987): ");
+            String code = scanner.nextLine().trim();
+            if (code.matches("B[A-Z]{3}\\d{4}")) {
+                return code;
+            } else {
+                System.out.println("Invalid format. Please enter a valid course code.");
+            }
+        }
     }
 
     public void displayCourseDetails(Course course) {

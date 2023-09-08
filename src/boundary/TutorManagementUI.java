@@ -87,20 +87,48 @@ public class TutorManagementUI {
     }
 
     public Tutor inputTutorDetails() {
+        Scanner scanner = new Scanner(System.in);
+
         System.out.print("Enter tutor ID: ");
         String tutorId = scanner.nextLine();
+
         System.out.print("Enter faculty: ");
         String faculty = scanner.nextLine();
+
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter phone number: ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print("Enter gender: ");
-        String gender = scanner.nextLine();
+
+        String phoneNumber;
+        while (true) {
+            System.out.print("Enter phone number (e.g., 012-3456789): ");
+            phoneNumber = scanner.nextLine();
+            if (isValidPhoneNumber(phoneNumber)) {
+                break;
+            } else {
+                System.out.println("Invalid phone number format. Please enter a valid phone number.");
+            }
+        }
+
+        String gender;
+        while (true) {
+            System.out.print("Enter gender (M/F): ");
+            gender = scanner.nextLine().toUpperCase();
+            if (gender.equals("M") || gender.equals("F")) {
+                break;
+            } else {
+                System.out.println("Invalid gender. Please enter 'M' for Male or 'F' for Female.");
+            }
+        }
+
         System.out.print("Enter status: ");
         String status = scanner.nextLine();
 
         return new Tutor(tutorId, faculty, name, phoneNumber, gender, status);
+    }
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        // Phone number should match the pattern "012-3456789"
+        return phoneNumber.matches("\\d{3}-\\d{7}");
     }
 
     public void displayTutorDetails(Tutor tutor) {
@@ -119,20 +147,38 @@ public class TutorManagementUI {
     }
 
     public String inputFilterByFaculty() {
-        System.out.print("Enter faculty: ");
-        String faculty = scanner.nextLine();
+        String faculty;
+        do {
+            System.out.print("Enter faculty: ");
+            faculty = scanner.nextLine().trim();
+            if (faculty.isEmpty()) {
+                System.out.println("Faculty cannot be empty. Please enter a valid faculty.");
+            }
+        } while (faculty.isEmpty());
         return faculty;
     }
 
     public String inputFilterByName() {
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
+        String name;
+        do {
+            System.out.print("Enter name: ");
+            name = scanner.nextLine().trim();
+            if (name.isEmpty()) {
+                System.out.println("Name cannot be empty. Please enter a valid name.");
+            }
+        } while (name.isEmpty());
         return name;
     }
 
     public String inputFilterByStatus() {
-        System.out.print("Enter status: ");
-        String status = scanner.nextLine();
+        String status;
+        do {
+            System.out.print("Enter status: ");
+            status = scanner.nextLine().trim();
+            if (status.isEmpty()) {
+                System.out.println("Status cannot be empty. Please enter a valid status.");
+            }
+        } while (status.isEmpty());
         return status;
     }
 

@@ -1,19 +1,20 @@
 package adt;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
  *
  * @author xuanyi
  */
-public class SinglyLinkedList<T> implements ListInterface<T> {
+public class SinglyLinkedList<T> implements ListInterface<T>, Serializable {
 
     private Node firstNode; // reference to first node
     private Node lastNode;
     private int numberOfEntries;  	// number of entries in list
 
     // Structure of a Node
-    private class Node {
+    private class Node implements Serializable {
 
         private T data;
         private Node next;
